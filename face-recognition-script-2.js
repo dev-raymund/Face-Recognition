@@ -8,12 +8,19 @@ Promise.all([
 ]).then(startVideo)
 
 async function startVideo() {
-  // navigator.getUserMedia(
-  await navigator.mediaDevices.getUserMedia(
-    { video: {} },
-    stream => video.srcObject = stream,
-    err => console.error(err)
-  )
+
+  // navigator.mediaDevices.getUserMedia(
+  //   { video: {} },
+  //   stream => video.srcObject = stream,
+  //   err => console.error(err)
+  // )
+
+  try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: {} });
+      video.srcObject = stream;
+  } catch (error) {
+      console.error('Error accessing camera:', error);
+  }
 
   document.body.append('Loaded')
 }
