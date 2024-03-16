@@ -7,13 +7,21 @@ Promise.all([
   faceapi.nets.faceExpressionNet.loadFromUri('/models-2')
 ]).then(startVideo)
 
-function startVideo() {
-  // navigator.getUserMedia(
-  navigator.mediaDevices.getUserMedia(
-    { video: true },
-    stream => video.srcObject = stream,
-    err => console.error(err)
-  )
+async function startVideo() {
+  // // navigator.getUserMedia(
+  // navigator.mediaDevices.getUserMedia(
+  //   { video: {} },
+  //   stream => video.srcObject = stream,
+  //   err => console.error(err)
+  // )
+
+  try {
+      const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      const videoElement = document.getElementById('video');
+      videoElement.srcObject = stream;
+  } catch (error) {
+      console.error('Error accessing camera:', error);
+  }
 
   document.body.append('Loaded')
 }
